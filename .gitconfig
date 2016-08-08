@@ -1,0 +1,21 @@
+[alias]
+	co    = checkout
+	st    = status
+	cm    = commit
+	br    = branch
+  logg  = log --stat --pretty=format:'%Cblue%h %Cgreen%ar %Cred%an %Creset%s %Cred%d'
+  loggr = log --graph --date-order --pretty=format:'%Cblue%h %Cgreen%ci %Cred%an %Cblue%m %Creset%s %Cred%d'
+
+[user]
+	email = ryosuke.watanabe@gaiax.com
+	name = ryosuke.watanabe
+[color]
+	ui = auto
+[pull]
+	rebase = true
+[merge]
+	ff = false
+[push]
+	default = simple
+[core]
+	editor = vim
