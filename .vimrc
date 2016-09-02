@@ -123,12 +123,14 @@ set softtabstop=4
 
 au FileType html       setlocal sw=2 ts=2 sts=2
 au FileType css        setlocal sw=2 ts=2 sts=2
-au FileType javascript setlocal sw=4 ts=2 sts=2
+au FileType javascript setlocal sw=2 ts=2 sts=2
 au FileType markdown   setlocal sw=4 ts=4 sts=4
 au FileType ruby       setlocal sw=2 ts=2 sts=2
 au FileType haml       setlocal sw=2 ts=2 sts=2
 au FileType less,sass  setlocal sw=2 ts=2 sts=2
 au FileType yaml       setlocal sw=2 ts=2 sts=2
+au FileType vim        setlocal sw=2 ts=2 sts=2
+au FileType zsh        setlocal sw=2 ts=2 sts=2
 
 "------------------------------------
 " neocomplcache
