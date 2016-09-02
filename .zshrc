@@ -6,6 +6,16 @@ export LANG=ja_JP.UTF-8
 
 bindkey -e
 
+## cdr
+autoload -Uz is-at-least
+if is-at-least 4.3.11; then
+  autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+  add-zsh-hook chpwd chpwd_recent_dirs
+  zstyle ':chpwd:*'      recent-dirs-max 1000
+  zstyle ':chpwd:*'      recent-dirs-default yes
+  zstyle ':completion:*' recent-dirs-insert both
+fi
+
 ## Default shell configuration
 #
 # set prompt
@@ -73,13 +83,24 @@ function peco-select-history() {
       tac="tail -r"
   fi
   BUFFER=$(\history -n 1 | \
-      eval $tac | \
-      peco --query "$LBUFFER")
+    eval $tac | \
+    peco --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle clear-screen
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+function peco-cdr () {
+  local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-cdr
+bindkey '^@' peco-cdr
 
 # display current branch
 function rprompt-git-current-branch {
@@ -155,6 +176,27 @@ setopt auto_list
 ## 直前と同じコマンドをヒストリに追加しない
 setopt hist_ignore_dups
 
+## ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
+setopt hist_ignore_all_dups
+
+## スペースで始まるコマンド行はヒストリリストから削除
+setopt hist_ignore_space
+
+## 古いコマンドと同じものは無視
+setopt hist_save_no_dups
+
+## historyコマンドは履歴に登録しない
+setopt hist_no_store
+
+## zsh の開始, 終了時刻をヒストリファイルに書き込む
+setopt extended_history
+
+## ヒストリを呼び出してから実行する間に一旦編集
+setopt hist_verify
+
+## ヒストリを共有
+setopt share_history
+
 ## cd 時に自動で push
 setopt autopushd
 
@@ -164,26 +206,17 @@ setopt pushd_ignore_dups
 ## TAB で順に補完候補を切り替える
 setopt auto_menu
 
-## zsh の開始, 終了時刻をヒストリファイルに書き込む
-setopt extended_history
-
 ## =command を command のパス名に展開する
 setopt equals
 
 ## --prefix=/usr などの = 以降も補完
 setopt magic_equal_subst
 
-## ヒストリを呼び出してから実行する間に一旦編集
-setopt hist_verify
-
 ## ファイル名の展開で辞書順ではなく数値的にソート
 setopt numeric_glob_sort
 
 ## 出力時8ビットを通す
 setopt print_eight_bit
-
-## ヒストリを共有
-setopt share_history
 
 ## 補完候補のカーソル選択を有効に
 zstyle ':completion:*:default' menu select=1
