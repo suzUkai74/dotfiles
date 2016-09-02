@@ -64,6 +64,24 @@ zstyle ':completion:*' list-colors \
 ;;
 esac
 
+# peco
+function peco-select-history() {
+  local tac
+  if which tac > /dev/null; then
+      tac="tac"
+  else
+      tac="tail -r"
+  fi
+  BUFFER=$(\history -n 1 | \
+      eval $tac | \
+      peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+# display current branch
 function rprompt-git-current-branch {
 local name st color
 
@@ -182,5 +200,5 @@ setopt auto_param_keys
 ## ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
 setopt auto_param_slash
 
-# スペルチェック
+## スペルチェック
 setopt correct
