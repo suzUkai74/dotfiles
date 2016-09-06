@@ -40,6 +40,9 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'slim-template/vim-slim'
+NeoBundle "rcmdnk/vim-markdown"
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
 
 call neobundle#end()
 
@@ -131,6 +134,14 @@ au FileType less,sass  setlocal sw=2 ts=2 sts=2
 au FileType yaml       setlocal sw=2 ts=2 sts=2
 au FileType vim        setlocal sw=2 ts=2 sts=2
 au FileType zsh        setlocal sw=2 ts=2 sts=2
+
+"------------------------------------
+" previm
+"------------------------------------
+augroup PrevimSettings
+  autocmd!
+  autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
 
 "------------------------------------
 " neocomplcache
