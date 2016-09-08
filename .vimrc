@@ -66,6 +66,10 @@ set smarttab
 " 常にステータスラインを表示
 set laststatus=2
 
+" スプリットのスタイル
+set fillchars+=vert:\|
+hi VertSplit cterm=NONE ctermfg=NONE   ctermbg=NONE
+
 " ファイルを保存しなくても、別ファイルが開けるように
 set hidden
 
