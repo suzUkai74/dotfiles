@@ -17,7 +17,6 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'tyru/caw.vim.git'
 NeoBundle 'Yggdroot/indentLine'
@@ -68,7 +67,7 @@ set laststatus=2
 
 " スプリットのスタイル
 set fillchars+=vert:\|
-hi VertSplit cterm=NONE ctermfg=NONE   ctermbg=NONE
+hi VertSplit cterm=NONE ctermfg=NONE ctermbg=NONE
 
 " ファイルを保存しなくても、別ファイルが開けるように
 set hidden
@@ -119,6 +118,9 @@ nnoremap - <C-x>
 set noerrorbells
 set vb t_vb=
 
+" タイムアウト設定
+set timeout timeoutlen=1000 ttimeoutlen=50
+
 " インデント設定
 set autoindent
 set smartindent
@@ -157,7 +159,7 @@ let g:neocomplcache_enable_at_startup = 1
 " 大文字が入力されるまで大文字小文字の区別を無視
 let g:neocomplcache_enable_smart_case = 1
 
-" _区切りの保管を有効化 
+" _区切りの保管を有効化
 let g:neocomplcache_enable_underbar_completion = 1
 
 " キャッシュするときの最小文字長
