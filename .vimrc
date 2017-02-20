@@ -59,7 +59,10 @@ syntax on
 " 行番号表示
 set number
 
-"行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
+" vim上でファイル保管
+set wildmode=list,full
+
+" 行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
 
 " 常にステータスラインを表示
@@ -78,7 +81,7 @@ set cursorline
 " クリップボードを共有
 set clipboard=unnamed,autoselect
 
-"C-vの矩形選択で行末より後ろもカーソルを置ける
+" C-vの矩形選択で行末より後ろもカーソルを置ける
 set virtualedit=block
 
 " 行末スペースを可視化する
