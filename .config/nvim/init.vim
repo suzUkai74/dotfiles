@@ -164,9 +164,9 @@ let g:deoplete#auto_complete_delay = 0
 " Move by tab
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
-"------------------------------------
+"------------------------------------------------
 " denite
-"------------------------------------
+"------------------------------------------------
 
 call denite#custom#var('file_rec', 'command',
   \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
