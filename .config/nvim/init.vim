@@ -2,7 +2,7 @@ if &compatible
   set nocompatible
 endif
 
-let s:dein_dir = '~/.config/nvim/dein'
+let s:dein_dir = "$HOME/.config/nvim/dein"
 let s:dein_repo_url = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 execute 'set runtimepath+=' . s:dein_repo_url
 
@@ -30,9 +30,15 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-fugitive')
   call dein#add('tyru/caw.vim')
   call dein#add('rking/ag.vim')
+  call dein#add('glidenote/memolist.vim')
+  call dein#add('kannokanno/previm')
+  call dein#add('tyru/open-browser.vim')
 
   call dein#add('vim-ruby/vim-ruby')
   call dein#add('tpope/vim-rails')
+  call dein#add('tpope/vim-markdown')
+  call dein#add('jelera/vim-javascript-syntax')
+  call dein#add('hail2u/vim-css3-syntax')
 
   call dein#end()
   call dein#save_state()
@@ -48,6 +54,15 @@ endif
 "------------------------------------------------
 " Base
 "------------------------------------------------
+
+" Encoding
+set encoding=utf-8
+
+" Write file encoding
+set fileencoding=utf-8
+
+" Read file encodings
+set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
 
 " Display line number.
 set number
@@ -154,7 +169,7 @@ nnoremap - <C-x>
 inoremap <C-c> <ESC>
 
 "------------------------------------------------
-" deoplete
+" deoplete.nvim
 "------------------------------------------------
 
 " Use deoplete.
@@ -165,7 +180,7 @@ let g:deoplete#auto_complete_delay = 0
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 "------------------------------------------------
-" denite
+" denite.nvim
 "------------------------------------------------
 
 call denite#custom#var('file_rec', 'command',
@@ -182,7 +197,7 @@ nnoremap <silent> <C-k><C-u> :<C-u>Denite file_mru<CR>
 nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
 
 "------------------------------------------------
-" lightline
+" lightline.vim
 "------------------------------------------------
 
 let g:lightline = {
@@ -250,7 +265,28 @@ function! MyMode()
 endfunction
 
 "------------------------------------------------
-" caw
+" caw.vim
 "------------------------------------------------
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
+
+"------------------------------------------------
+" memolist.vim
+"------------------------------------------------
+nnoremap <Leader>mn  :MemoNew<CR>
+nnoremap <Leader>ml  :MemoList<CR>
+nnoremap <Leader>mg  :MemoGrep<CR>
+
+" suffix type
+let g:memolist_memo_suffix = "md"
+
+" use denite
+let g:memolist_denite = 1
+
+"------------------------------------------------
+" previm
+"------------------------------------------------
+augroup PrevimSettings
+  autocmd!
+  autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
