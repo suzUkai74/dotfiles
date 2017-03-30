@@ -64,6 +64,9 @@ set fileencoding=utf-8
 " Read file encodings
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
 
+" Color scheme
+colorscheme dracula
+
 " Display line number.
 set number
 
