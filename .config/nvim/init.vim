@@ -55,6 +55,9 @@ endif
 " Base
 "------------------------------------------------
 
+" Color scheme
+colorscheme dracula
+
 " Encoding
 set encoding=utf-8
 
@@ -63,9 +66,6 @@ set fileencoding=utf-8
 
 " Read file encodings
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
-
-" Color scheme
-colorscheme dracula
 
 " Display line number.
 set number
@@ -179,8 +179,12 @@ inoremap <C-c> <ESC>
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
 
+
 " Move by tab
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" close by enter
+inoremap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
 
 "------------------------------------------------
 " denite.nvim
