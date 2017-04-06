@@ -76,9 +76,6 @@ set cursorline
 " Always display status line.
 set laststatus=2
 
-" File name complete.
-set wildmode=list,full
-
 " Visualize end-of-line space.
 set list
 set listchars=trail:-
@@ -167,8 +164,8 @@ au FileType zsh        setlocal sw=2 ts=2 sts=2
 " Key Binding
 "------------------------------------------------
 
-nnoremap <C-a> ^
-nnoremap <C-e> $
+noremap <C-a> ^
+noremap <C-e> $
 nnoremap + <C-a>
 nnoremap - <C-x>
 inoremap <C-c> <ESC>
@@ -208,9 +205,46 @@ nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
 "------------------------------------------------
 " lightline.vim
 "------------------------------------------------
+let g:lightline_colors_name = 'dracula'
+
+if g:lightline_colors_name == 'dracula'
+  let s:black          = [ '#1c1c1c', 234 ]
+  let s:dark_gray      = [ '#262626', 235 ]
+  let s:gray           = [ '#3a3a3a', 237 ]
+  let s:light_gray     = [ '#4e4e4e', 239 ]
+  let s:white          = [ '#dadada', 253 ]
+  let s:dark_blue_gray = [ '#6272a4', 60  ]
+  let s:purple         = [ '#bd93f9', 141 ]
+  let s:pink           = [ '#ff79c6', 212 ]
+  let s:yellow         = [ '#f1fa8c', 228 ]
+  let s:orange         = [ '#ffb86c', 228 ]
+
+  let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
+  let s:p.normal.left     = [ [ s:white, s:dark_blue_gray], [s:white, s:gray ] ]
+  let s:p.normal.right    = [ [ s:white, s:dark_blue_gray], [s:white, s:gray ] ]
+  let s:p.inactive.left   = [ [ s:white, s:gray], [s:white, s:gray ] ]
+  let s:p.inactive.right  = [ [ s:white, s:gray], [s:white, s:gray ] ]
+  let s:p.insert.left     = [ [ s:black, s:purple], [s:purple, s:gray ] ]
+  let s:p.insert.right    = [ [ s:black, s:purple], [s:purple, s:gray ] ]
+  let s:p.replace.left    = [ [ s:black, s:yellow], [s:yellow, s:gray ] ]
+  let s:p.replace.right   = [ [ s:black, s:yellow], [s:yellow, s:gray ] ]
+  let s:p.visual.left     = [ [ s:black, s:pink], [s:pink, s:gray ] ]
+  let s:p.visual.right    = [ [ s:black, s:pink], [s:pink, s:gray ] ]
+  let s:p.normal.middle   = [ [ s:white, s:dark_gray ] ]
+  let s:p.inactive.middle = [ [ s:white, s:dark_gray ] ]
+  let s:p.tabline.left    = [ [ s:white, s:light_gray ] ]
+  let s:p.tabline.tabsel  = [ [ s:white, s:dark_blue_gray ] ]
+  let s:p.tabline.middle  = [ [ s:white, s:gray ] ]
+  let s:p.tabline.right   = [ [ s:white, s:dark_gray ] ]
+  let s:p.normal.error    = [ [ s:black, s:orange ] ]
+  let s:p.normal.warning  = [ [ s:black, s:orange ] ]
+  let g:lightline#colorscheme#dracula#palette = lightline#colorscheme#flatten(s:p)
+
+  highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c
+endif
 
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
+    \ 'colorscheme': g:lightline_colors_name,
     \ 'mode_map': {'c': 'NORMAL'},
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
