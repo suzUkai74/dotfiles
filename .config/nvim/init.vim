@@ -19,7 +19,7 @@ if dein#load_state(s:dein_dir)
     \    },
     \ })
 
-  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/deoplete.nvim', { 'on_i': 1 })
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
   call dein#add('Shougo/denite.nvim')
@@ -30,15 +30,16 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-fugitive')
   call dein#add('tyru/caw.vim')
   call dein#add('rking/ag.vim')
+  call dein#add('thinca/vim-ref')
   call dein#add('glidenote/memolist.vim')
-  call dein#add('kannokanno/previm')
-  call dein#add('tyru/open-browser.vim')
+  call dein#add('kannokanno/previm', { 'on_ft': 'markdown' })
+  call dein#add('tyru/open-browser.vim', { 'on_ft': 'markdown' })
 
-  call dein#add('vim-ruby/vim-ruby')
-  call dein#add('tpope/vim-rails')
-  call dein#add('tpope/vim-markdown')
-  call dein#add('jelera/vim-javascript-syntax')
-  call dein#add('hail2u/vim-css3-syntax')
+  call dein#add('vim-ruby/vim-ruby', { 'on_ft': 'ruby' })
+  call dein#add('tpope/vim-rails', { 'on_ft': 'ruby' })
+  call dein#add('tpope/vim-markdown', { 'on_ft': 'markdown' })
+  call dein#add('jelera/vim-javascript-syntax', { 'on_ft': 'javascript' })
+  call dein#add('hail2u/vim-css3-syntax', { 'on_ft': 'css'} )
 
   call dein#end()
   call dein#save_state()
@@ -65,7 +66,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 
 " Read file encodings
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 
 " Display line number.
 set number
