@@ -167,6 +167,8 @@ au FileType zsh        setlocal sw=2 ts=2 sts=2
 " Key Binding
 "------------------------------------------------
 
+nnoremap <C-a> ^
+nnoremap <C-e> $
 nnoremap + <C-a>
 nnoremap - <C-x>
 inoremap <C-c> <ESC>
