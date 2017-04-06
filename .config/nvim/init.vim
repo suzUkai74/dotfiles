@@ -206,6 +206,7 @@ nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
 "------------------------------------------------
 " lightline.vim
 "------------------------------------------------
+
 let g:lightline_colors_name = 'dracula'
 
 if g:lightline_colors_name == 'dracula'
@@ -311,12 +312,14 @@ endfunction
 "------------------------------------------------
 " caw.vim
 "------------------------------------------------
+
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 
 "------------------------------------------------
 " memolist.vim
 "------------------------------------------------
+
 nnoremap <Leader>mn  :MemoNew<CR>
 nnoremap <Leader>ml  :MemoList<CR>
 nnoremap <Leader>mg  :MemoGrep<CR>
@@ -330,6 +333,7 @@ let g:memolist_denite = 1
 "------------------------------------------------
 " previm
 "------------------------------------------------
+
 augroup PrevimSettings
   autocmd!
   autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
