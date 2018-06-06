@@ -1,0 +1,15 @@
+" Not case sensitive.
+set ignorecase
+
+" Distinguish capital letters if search words with uppercase letters.
+set smartcase
+
+" showGroupFilesMenu
+noremap <C-m> :xccmd showGroupFilesMenu<CR>
+
+" jumpToDefinition
+nmap jd :xccmd jumpToDefinition<CR>
+
+" moveHistory
+noremap <C-p> :xccmd goBackInHistoryByCommand<CR>
+noremap <C-n> :xccmd goForwardInHistoryByCommand<CR>

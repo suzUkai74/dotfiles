@@ -23,13 +23,14 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
   call dein#add('Shougo/denite.nvim')
-  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+  call dein#add('Shougo/neomru.vim')
   call dein#add('itchyny/lightline.vim')
   call dein#add('Yggdroot/indentLine')
   call dein#add('airblade/vim-gitgutter')
   call dein#add('tpope/vim-fugitive')
   call dein#add('tyru/caw.vim')
   call dein#add('rking/ag.vim')
+  call dein#add('tpope/vim-surround')
   call dein#add('thinca/vim-ref')
   call dein#add('glidenote/memolist.vim')
   call dein#add('kannokanno/previm', { 'on_ft': 'markdown' })
@@ -39,7 +40,9 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-rails', { 'on_ft': 'ruby' })
   call dein#add('tpope/vim-markdown', { 'on_ft': 'markdown' })
   call dein#add('jelera/vim-javascript-syntax', { 'on_ft': 'javascript' })
-  call dein#add('hail2u/vim-css3-syntax', { 'on_ft': 'css'} )
+  call dein#add('hail2u/vim-css3-syntax', { 'on_ft': 'css' })
+  call dein#add('slim-template/vim-slim', { 'on_ft': 'slim' })
+  call dein#add('digitaltoad/vim-pug', { 'on_ft': 'pug' })
 
   call dein#end()
   call dein#save_state()
@@ -72,7 +75,7 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set number
 
 " Underline in current line.
-set cursorline
+" set cursorline
 
 " Always display status line.
 set laststatus=2
@@ -132,11 +135,21 @@ set history=50
 " Replacement g option default.
 set gdefault
 
-" Share clipboard.
-set clipboard=unnamed,unnamedplus
-
 " No limit short shape selection.
 set virtualedit=block
+
+" Timeout
+set ttimeout
+set ttimeoutlen=50
+
+" terminal mode shell
+set sh=zsh
+
+" highlight
+highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c
+highlight Pmenu ctermbg=61 guibg=#6272a4
+highlight PmenuSel ctermbg=13 gui=undercurl guisp=Magenta
+highlight CursorLine ctermbg=13 gui=undercurl guisp=Magenta
 
 "------------------------------------------------
 " Indent
@@ -156,6 +169,8 @@ au FileType javascript setlocal sw=2 ts=2 sts=2
 au FileType markdown   setlocal sw=2 ts=2 sts=2
 au FileType ruby       setlocal sw=2 ts=2 sts=2
 au FileType haml       setlocal sw=2 ts=2 sts=2
+au FileType slim       setlocal sw=2 ts=2 sts=2
+au FileType pug        setlocal sw=2 ts=2 sts=2
 au FileType less,sass  setlocal sw=2 ts=2 sts=2
 au FileType yaml       setlocal sw=2 ts=2 sts=2
 au FileType vim        setlocal sw=2 ts=2 sts=2
@@ -176,9 +191,9 @@ inoremap <C-c> <ESC>
 "------------------------------------------------
 
 " Use deoplete.
+let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
-
 
 " Move by tab
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -190,14 +205,15 @@ inoremap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
 " denite.nvim
 "------------------------------------------------
 
-call denite#custom#var('file_rec', 'command',
-  \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
 call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts',
+      \ ['-i', '--vimgrep'])
 call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'final_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', [])
-call denite#custom#var('grep', 'default_opts', ['--nocolor', '--nogroup'])
+call denite#custom#var('grep', 'final_opts', [])
+call denite#custom#map('insert', "<C-j>", '<denite:move_to_next_line>')
+call denite#custom#map('insert', "<C-k>", '<denite:move_to_previous_line>')
 
 nnoremap <silent> <C-k><C-f> :<C-u>Denite file_rec<CR>
 nnoremap <silent> <C-k><C-u> :<C-u>Denite file_mru<CR>
@@ -207,52 +223,14 @@ nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
 " lightline.vim
 "------------------------------------------------
 
-let g:lightline_colors_name = 'dracula'
-
-if g:lightline_colors_name == 'dracula'
-  let s:black          = [ '#1c1c1c', 234 ]
-  let s:dark_gray      = [ '#262626', 235 ]
-  let s:gray           = [ '#3a3a3a', 237 ]
-  let s:light_gray     = [ '#4e4e4e', 239 ]
-  let s:white          = [ '#dadada', 253 ]
-  let s:dark_blue_gray = [ '#6272a4', 60  ]
-  let s:purple         = [ '#bd93f9', 141 ]
-  let s:pink           = [ '#ff79c6', 212 ]
-  let s:yellow         = [ '#f1fa8c', 228 ]
-  let s:orange         = [ '#ffb86c', 228 ]
-
-  let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
-  let s:p.normal.left     = [ [ s:white, s:dark_blue_gray], [s:white, s:gray ] ]
-  let s:p.normal.right    = [ [ s:white, s:dark_blue_gray], [s:white, s:gray ] ]
-  let s:p.inactive.left   = [ [ s:white, s:gray], [s:white, s:gray ] ]
-  let s:p.inactive.right  = [ [ s:white, s:gray], [s:white, s:gray ] ]
-  let s:p.insert.left     = [ [ s:black, s:purple], [s:purple, s:gray ] ]
-  let s:p.insert.right    = [ [ s:black, s:purple], [s:purple, s:gray ] ]
-  let s:p.replace.left    = [ [ s:black, s:yellow], [s:yellow, s:gray ] ]
-  let s:p.replace.right   = [ [ s:black, s:yellow], [s:yellow, s:gray ] ]
-  let s:p.visual.left     = [ [ s:black, s:pink], [s:pink, s:gray ] ]
-  let s:p.visual.right    = [ [ s:black, s:pink], [s:pink, s:gray ] ]
-  let s:p.normal.middle   = [ [ s:white, s:dark_gray ] ]
-  let s:p.inactive.middle = [ [ s:white, s:dark_gray ] ]
-  let s:p.tabline.left    = [ [ s:white, s:light_gray ] ]
-  let s:p.tabline.tabsel  = [ [ s:white, s:dark_blue_gray ] ]
-  let s:p.tabline.middle  = [ [ s:white, s:gray ] ]
-  let s:p.tabline.right   = [ [ s:white, s:dark_gray ] ]
-  let s:p.normal.error    = [ [ s:black, s:orange ] ]
-  let s:p.normal.warning  = [ [ s:black, s:orange ] ]
-  let g:lightline#colorscheme#dracula#palette = lightline#colorscheme#flatten(s:p)
-
-  highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c
-endif
-
 let g:lightline = {
-    \ 'colorscheme': g:lightline_colors_name,
+    \ 'colorscheme': 'Dracula',
     \ 'mode_map': {'c': 'NORMAL'},
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
     \ },
-    \ 'separator': { 'left': '⮀', 'right': '⮂' },
-    \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '|', 'right': '|' },
     \ 'component_function': {
       \   'fugitive': 'MyFugitive',
       \   'readonly': 'MyReadonly',
@@ -270,14 +248,13 @@ function! MyModified()
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '' : ''
 endfunction
 
 function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+  return ('' != MyReadonly() ? MyReadonly() . '' : '') .
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'denite' ? denite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
         \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
@@ -286,7 +263,7 @@ function! MyFugitive()
   try
     if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
       let _ = fugitive#head()
-      return strlen(_) ? '⭠ '._ : ''
+      return strlen(_) ? ''._ : ''
     endif
   catch
   endtry
@@ -329,6 +306,23 @@ let g:memolist_memo_suffix = "md"
 
 " use denite
 let g:memolist_denite = 1
+
+"------------------------------------------------
+" vim-markdown
+"------------------------------------------------
+
+nnoremap <buffer> <Leader><Leader> :call ToggleCheckbox()<CR>
+
+function! ToggleCheckbox()
+  let l:line = getline('.')
+  if l:line =~ '^\-\s\[\s\]'
+    let l:result = substitute(l:line, '^-\s\[\s\]', '- [x]', '')
+    call setline('.', l:result)
+  elseif l:line =~ '^\-\s\[x\]'
+    let l:result = substitute(l:line, '^-\s\[x\]', '- [ ]', '')
+    call setline('.', l:result)
+  end
+endfunction
 
 "------------------------------------------------
 " previm

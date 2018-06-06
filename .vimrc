@@ -238,8 +238,8 @@ let g:lightline = {
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
     \ },
-    \ 'separator': { 'left': '⮀', 'right': '⮂' },
-    \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '|', 'right': '|' },
     \ 'component_function': {
       \   'fugitive': 'MyFugitive',
       \   'readonly': 'MyReadonly',

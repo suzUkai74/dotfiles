@@ -125,7 +125,7 @@ else
 fi
 
 # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
-# これをしないと右プロンプトの位置がずれる
+# これをしないとhプロンプトの位置がずれる
 echo "%{$color%}$name%{$reset_color%}"
 }
 
@@ -148,6 +148,7 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 
 alias ls="ls -GF"
 alias gip="curl ifconfig.io"
+alias vim="nvim"
 
 ## コアダンプサイズを制限
 limit coredumpsize 102400
@@ -235,3 +236,14 @@ setopt auto_param_slash
 
 ## スペルチェック
 setopt correct
+
+export PATH=~/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
+
+export PATH=~/.nodenv/bin:$PATH
+eval "$(nodenv init -)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
