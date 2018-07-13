@@ -71,6 +71,9 @@ set fileencoding=utf-8
 " Read file encodings
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 
+" file format
+set fileformats=unix,dos,mac
+
 " Display line number.
 set number
 
@@ -114,9 +117,6 @@ set autoread
 set noerrorbells
 set vb t_vb=
 
-" Timeout config.
-set timeout timeoutlen=1000 ttimeoutlen=50
-
 " Highlight matched words.
 set hlsearch
 
@@ -144,6 +144,9 @@ set ttimeoutlen=50
 
 " terminal mode shell
 set sh=zsh
+
+" share clipboard
+set clipboard=unnamed
 
 " highlight
 highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c

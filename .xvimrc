@@ -1,3 +1,9 @@
+" Highlight matched words.
+set hlsearch
+
+" Incremental search.
+set incsearch
+
 " Not case sensitive.
 set ignorecase
 

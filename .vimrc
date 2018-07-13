@@ -10,6 +10,7 @@ call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+NeoBundle 'dracula/vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
@@ -21,6 +22,7 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'tyru/caw.vim.git'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'rking/ag.vim'
+NeoBundle 'tpope/vim-surround'
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
   \     'windows' : 'make -f make_mingw32.mak',
@@ -31,7 +33,7 @@ NeoBundle 'Shougo/vimproc', {
   \ }
 
 NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rails', { 'on_ft': 'ruby' }
 NeoBundle 'tpope/vim-endwise.git'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'othree/html5.vim'
@@ -50,88 +52,121 @@ filetype plugin indent on
 NeoBundleCheck
 
 "------------------------------------
-" 基本設定
+" Base
 "------------------------------------
 
-" 構文ごとに色分け表示する
+" syntax color
 syntax on
 
-" 行番号表示
+" Color scheme
+colorscheme dracula
+
+" Encoding
+set encoding=utf-8
+
+" Write file encoding
+set fileencoding=utf-8
+
+" Read file encodings
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
+
+" Display line number.
 set number
 
-" vim上でファイル保管
+" file storage on vim
 set wildmode=list,full
 
-" 行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
-set smarttab
-
-" 常にステータスラインを表示
-set laststatus=2
-
-" スプリットのスタイル
-set fillchars+=vert:\|
-hi VertSplit cterm=NONE ctermfg=NONE ctermbg=NONE
-
-" ファイルを保存しなくても、別ファイルが開けるように
-set hidden
-
-" カレント行に下線
-set cursorline
-
-" クリップボードを共有
+" share clipboard
 set clipboard=unnamed,autoselect
 
-" C-vの矩形選択で行末より後ろもカーソルを置ける
-set virtualedit=block
+" Underline in current line.
+" set cursorline
 
-" 行末スペースを可視化する
+" Always display status line.
+set laststatus=2
+
+" Visualize end-of-line space.
 set list
 set listchars=trail:-
 
-" 検索時に大文字小文字を区別しない
-set ignorecase
-
-" 検索語に大文字を混ぜると検索時に大文字を区別する
-set smartcase
-
-" 検索語にマッチした単語をハイライトする
-set hlsearch
-
-" 検索履歴を50個残す
-set history=50
-
-" ウィンドウ幅で行を折り返す
+" Wrap with window width.
 set wrap
 set display=lastline
 
-" バックスペースでインデントや改行を削除できるようにする
-set backspace=indent,eol,start
+" Split style.
+set fillchars+=vert:\|
+hi VertSplit cterm=NONE ctermfg=NONE ctermbg=NONE
 
-" 2バイト文字があってもカーソル位置がずれないようにする
+" 2 byte character adjustment.
 set ambiwidth=double
 
-" 保管メニュー高さ
-set pumheight=10
+" Complement menu height.
+set pumheight=20
 
-" インクリメント・デクリメント設定
-nnoremap + <C-a>
-nnoremap - <C-x>
+" No backspace limit.
+set backspace=indent,eol,start
 
-" beep音消す
+" Scroll with margins.
+set scrolloff=8
+
+" Open another file without saving.
+set hidden
+
+" Reread the changed file.
+set autoread
+
+" Invalid beep sound.
 set noerrorbells
 set vb t_vb=
 
-" タイムアウト設定
-set timeout timeoutlen=1000 ttimeoutlen=50
+" Highlight matched words.
+set hlsearch
 
-" インデント設定
+" Incremental search.
+set incsearch
+
+" Not case sensitive.
+set ignorecase
+
+" Distinguish capital letters if search words with uppercase letters.
+set smartcase
+
+
+" Command line history.
+set history=50
+
+" Replacement g option default.
+set gdefault
+
+" No limit short shape selection.
+set virtualedit=block
+
+" Timeout
+set ttimeout
+set ttimeoutlen=50
+
+" terminal mode shell
+set sh=zsh
+
+" highlight
+highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c
+highlight Pmenu ctermbg=61 guibg=#6272a4
+highlight PmenuSel ctermbg=13 gui=undercurl guisp=Magenta
+highlight CursorLine ctermbg=13 gui=undercurl guisp=Magenta
+highlight Type ctermfg=117 guifg=#8be9fd
+
+
+"------------------------------------------------
+" Indent
+"------------------------------------------------
+"
 set autoindent
 set smartindent
 set expandtab
 set smarttab
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
 
 au FileType html       setlocal sw=2 ts=2 sts=2
 au FileType css        setlocal sw=2 ts=2 sts=2
@@ -139,71 +174,50 @@ au FileType javascript setlocal sw=2 ts=2 sts=2
 au FileType markdown   setlocal sw=4 ts=4 sts=4
 au FileType ruby       setlocal sw=2 ts=2 sts=2
 au FileType haml       setlocal sw=2 ts=2 sts=2
+au FileType slim       setlocal sw=2 ts=2 sts=2
 au FileType less,sass  setlocal sw=2 ts=2 sts=2
 au FileType yaml       setlocal sw=2 ts=2 sts=2
 au FileType vim        setlocal sw=2 ts=2 sts=2
 au FileType zsh        setlocal sw=2 ts=2 sts=2
 
-"------------------------------------
-" previm
-"------------------------------------
-augroup PrevimSettings
-  autocmd!
-  autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-augroup END
+"------------------------------------------------
+" Key Binding
+"------------------------------------------------
+
+noremap <C-a> ^
+noremap <C-e> $
+nnoremap + <C-a>
+nnoremap - <C-x>
+inoremap <C-c> <ESC>
 
 "------------------------------------
 " neocomplcache
 "------------------------------------
 
-" 自動起動設定
 let g:neocomplcache_enable_at_startup = 1
-
-" 大文字が入力されるまで大文字小文字の区別を無視
 let g:neocomplcache_enable_smart_case = 1
-
-" _区切りの保管を有効化
 let g:neocomplcache_enable_underbar_completion = 1
-
-" キャッシュするときの最小文字長
 let g:neocomplcache_min_syntax_length = 3
-
-" neocomplcacheを自動的にロックするバッファ名のパターンを指定
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" ディクショナリを設定
 let g:neocomplcache_dictionary_filetype_lists = {
       \ 'default' : ''
       \ }
 
-" 前回行われた補完をキャンセル
 inoremap <expr><C-g> neocomplcache#undo_completion()
-
-" 補完候補のなかから、共通する部分を補完
 inoremap <expr><C-l> neocomplcache#complete_common_string()
-
-" ポップアップを削除
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-
-" 選択している候補を確定
 inoremap <expr><C-y> neocomplcache#close_popup()
-
-" 選択している候補をキャンセルし、ポップアップを閉じる
 inoremap <expr><C-e> neocomplcache#cancel_popup()
-
-" Returnキーでポップアップを閉じる 
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 function! s:my_cr_function()
   return neocomplcache#smart_close_popup() . "\<CR>"
 endfunction
 
-" TAB移動できるようにする
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"------------------------------------
+" unite.vim
+"------------------------------------
 
-"------------------------------------
-" unite
-"------------------------------------
 let g:unite_enable_start_insert = 1
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_file_mru_limit = 200
@@ -214,8 +228,6 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
 nnoremap <silent> ,ug  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-
-" unite grep に ag(The Silver Searcher) を使う
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -223,8 +235,9 @@ if executable('ag')
 endif
 
 "------------------------------------
-" caw
+" caw.vim
 "------------------------------------
+
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 
@@ -233,7 +246,7 @@ vmap <Leader>c <Plug>(caw:i:toggle)
 "------------------------------------
 
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
+    \ 'colorscheme': 'Dracula',
     \ 'mode_map': {'c': 'NORMAL'},
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -298,10 +311,22 @@ endfunction
 "------------------------------------
 " vim-gitgutter
 "------------------------------------
+
 nnoremap <silent><C-g>  :<C-u>GitGutterToggle<CR>
 nnoremap <silent><C-g>h :<C-u>GitGutterLineHighlightsToggle<CR>
 
 "------------------------------------
 " vim-filer
 "------------------------------------
+
 nnoremap <silent><C-e> :VimFilerExplore -split -winwidth=30 -find -no-quit<Cr>
+
+"------------------------------------
+" previm
+"------------------------------------
+
+augroup PrevimSettings
+  autocmd!
+  autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
+
