@@ -1,7 +1,8 @@
 if &compatible
   set nocompatible
 endif
-
+let g:python_host_prog = $PYENV_ROOT . '/versions/neovim-2/bin/python'
+let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim-3/bin/python'
 let s:dein_dir = "$HOME/.config/nvim/dein"
 let s:dein_repo_url = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 execute 'set runtimepath+=' . s:dein_repo_url
@@ -11,15 +12,9 @@ if dein#load_state(s:dein_dir)
 
   call dein#add(s:dein_repo_url)
 
-  call dein#add('Shougo/vimproc.vim', {
-    \ 'build': {
-    \     'mac': 'make -f make_mac.mak',
-    \     'linux': 'make',
-    \     'unix': 'gmake',
-    \    },
-    \ })
-
+  call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/deoplete.nvim', { 'on_i': 1 })
+  call dein#add('fishbullet/deoplete-ruby', { 'on_ft': 'ruby' })
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
   call dein#add('Shougo/denite.nvim')
@@ -29,7 +24,6 @@ if dein#load_state(s:dein_dir)
   call dein#add('airblade/vim-gitgutter')
   call dein#add('tpope/vim-fugitive')
   call dein#add('tyru/caw.vim')
-  call dein#add('rking/ag.vim')
   call dein#add('tpope/vim-surround')
   call dein#add('thinca/vim-ref')
   call dein#add('glidenote/memolist.vim')
@@ -145,9 +139,6 @@ set ttimeoutlen=50
 " terminal mode shell
 set sh=zsh
 
-" share clipboard
-set clipboard=unnamed
-
 " highlight
 highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c
 highlight Pmenu ctermbg=61 guibg=#6272a4
@@ -194,9 +185,9 @@ inoremap <C-c> <ESC>
 "------------------------------------------------
 
 " Use deoplete.
-let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
+let g:deoplete#auto_complete_start_length = 1
 
 " Move by tab
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -208,12 +199,12 @@ inoremap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
 " denite.nvim
 "------------------------------------------------
 
-call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'command', ['rg'])
 call denite#custom#var('grep', 'default_opts',
-      \ ['-i', '--vimgrep'])
+      \ ['--vimgrep', '--no-heading'])
 call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'separator', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 call denite#custom#map('insert', "<C-j>", '<denite:move_to_next_line>')
 call denite#custom#map('insert', "<C-k>", '<denite:move_to_previous_line>')
@@ -227,7 +218,7 @@ nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
 "------------------------------------------------
 
 let g:lightline = {
-    \ 'colorscheme': 'Dracula',
+    \ 'colorscheme': 'darcula',
     \ 'mode_map': {'c': 'NORMAL'},
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -257,7 +248,7 @@ endfunction
 function! MyFilename()
   return ('' != MyReadonly() ? MyReadonly() . '' : '') .
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'denite' ? denite#get_status_string() :
+        \  &ft == 'denite' ? denite#get_status_mode() :
         \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
