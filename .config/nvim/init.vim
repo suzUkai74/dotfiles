@@ -32,6 +32,7 @@ if dein#load_state(s:dein_dir)
 
   call dein#add('vim-ruby/vim-ruby', { 'on_ft': 'ruby' })
   call dein#add('tpope/vim-rails', { 'on_ft': 'ruby' })
+  call dein#add('todesking/ruby_hl_lvar.vim', { 'on_ft': 'ruby' })
   call dein#add('tpope/vim-markdown', { 'on_ft': 'markdown' })
   call dein#add('jelera/vim-javascript-syntax', { 'on_ft': 'javascript' })
   call dein#add('hail2u/vim-css3-syntax', { 'on_ft': 'css' })
@@ -140,10 +141,11 @@ set ttimeoutlen=50
 set sh=zsh
 
 " highlight
-highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c
+highlight CursorLine ctermbg=13 gui=undercurl guisp=Magenta
+highlight Identifier ctermfg=215 gui=italic guifg=#ffb86c
 highlight Pmenu ctermbg=61 guibg=#6272a4
 highlight PmenuSel ctermbg=13 gui=undercurl guisp=Magenta
-highlight CursorLine ctermbg=13 gui=undercurl guisp=Magenta
+highlight Search cterm=NONE ctermfg=17 ctermbg=228 guifg=#282a36 guibg=#f1fa8c
 
 "------------------------------------------------
 " Indent
@@ -188,6 +190,9 @@ inoremap <C-c> <ESC>
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_complete_start_length = 1
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
 
 " Move by tab
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -281,6 +286,31 @@ function! MyMode()
 endfunction
 
 "------------------------------------------------
+" vim-gitgutter
+"------------------------------------------------
+
+if exists('&signcolumn')
+  set signcolumn=yes
+else
+  let g:gitgutter_sign_column_always = 1
+endif
+
+set updatetime=250
+nnoremap <Leader>ht :GitGutterLineHighlightsToggle<CR>
+
+"------------------------------------------------
+" vim-ref
+"------------------------------------------------
+
+let g:ref_refe_cmd = $HOME . '/.rbenv/shims/refe'
+
+"------------------------------------------------
+" ruby_hl_lvar
+"------------------------------------------------
+
+" let g:ruby_hl_lvar_hl_group = 'RubyLocalVariable'
+
+"-----------------------------------------------u
 " caw.vim
 "------------------------------------------------
 
