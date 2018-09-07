@@ -1,9 +1,10 @@
 if &compatible
   set nocompatible
 endif
+
 let g:python_host_prog = $PYENV_ROOT . '/versions/neovim-2/bin/python'
 let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim-3/bin/python'
-let s:dein_dir = "$HOME/.config/nvim/dein"
+let s:dein_dir = $HOME . '/.config/nvim/dein'
 let s:dein_repo_url = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 execute 'set runtimepath+=' . s:dein_repo_url
 
@@ -11,14 +12,17 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
   call dein#add(s:dein_repo_url)
-
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+  call dein#add('Shougo/vimshell')
   call dein#add('Shougo/deoplete.nvim', { 'on_i': 1 })
   call dein#add('fishbullet/deoplete-ruby', { 'on_ft': 'ruby' })
-  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet.vim', { 'on_ft': 'snippet' })
   call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/context_filetype.vim')
   call dein#add('Shougo/denite.nvim')
   call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/vimfiler.vim' )
+  call dein#add('Shougo/unite.vim')
   call dein#add('itchyny/lightline.vim')
   call dein#add('Yggdroot/indentLine')
   call dein#add('airblade/vim-gitgutter')
@@ -27,6 +31,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-surround')
   call dein#add('thinca/vim-ref')
   call dein#add('glidenote/memolist.vim')
+  call dein#add('thinca/vim-quickrun')
   call dein#add('kannokanno/previm', { 'on_ft': 'markdown' })
   call dein#add('tyru/open-browser.vim', { 'on_ft': 'markdown' })
 
@@ -38,6 +43,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('hail2u/vim-css3-syntax', { 'on_ft': 'css' })
   call dein#add('slim-template/vim-slim', { 'on_ft': 'slim' })
   call dein#add('digitaltoad/vim-pug', { 'on_ft': 'pug' })
+  call dein#add('bumaociyuan/vim-swift', { 'on_ft': 'swift' })
 
   call dein#end()
   call dein#save_state()
@@ -68,6 +74,9 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 
 " file format
 set fileformats=unix,dos,mac
+
+" no swap
+set noswapfile
 
 " Display line number.
 set number
@@ -139,6 +148,13 @@ set ttimeoutlen=50
 
 " terminal mode shell
 set sh=zsh
+
+" Cursol speed up
+set lazyredraw
+set ttyfast
+
+" update swap
+set updatetime=250
 
 " highlight
 highlight CursorLine ctermbg=13 gui=undercurl guisp=Magenta
@@ -223,24 +239,24 @@ nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
 "------------------------------------------------
 
 let g:lightline = {
-    \ 'colorscheme': 'darcula',
-    \ 'mode_map': {'c': 'NORMAL'},
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-    \ },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '|', 'right': '|' },
-    \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \   'readonly': 'MyReadonly',
-      \   'modified': 'MyModified',
-      \   'filename': 'MyFilename',
-      \   'fileformat': 'MyFileformat',
-      \   'filetype': 'MyFiletype',
-      \   'fileencoding': 'MyFileencoding',
-      \   'mode': 'MyMode'
-      \}
-      \}
+  \ 'colorscheme': 'darcula',
+  \ 'mode_map': {'c': 'NORMAL'},
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+  \ },
+  \ 'separator': { 'left': '', 'right': '' },
+  \ 'subseparator': { 'left': '|', 'right': '|' },
+  \ 'component_function': {
+    \ 'fugitive': 'MyFugitive',
+    \ 'readonly': 'MyReadonly',
+    \ 'modified': 'MyModified',
+    \ 'filename': 'MyFilename',
+    \ 'fileformat': 'MyFileformat',
+    \ 'filetype': 'MyFiletype',
+    \ 'fileencoding': 'MyFileencoding',
+    \ 'mode': 'MyMode'
+    \ }
+  \ }
 
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -295,8 +311,15 @@ else
   let g:gitgutter_sign_column_always = 1
 endif
 
-set updatetime=250
 nnoremap <Leader>ht :GitGutterLineHighlightsToggle<CR>
+
+"------------------------------------
+" vim-filer
+"------------------------------------
+
+let g:vimfiler_safe_mode_by_default = 0
+let g:vimfiler_as_default_explore = 1
+nnoremap <silent> <Leader>f :VimFilerExplore -split -winwidth=30 -find -toggle -no-quit<Cr>
 
 "------------------------------------------------
 " vim-ref
@@ -330,6 +353,18 @@ let g:memolist_memo_suffix = "md"
 
 " use denite
 let g:memolist_denite = 1
+
+"------------------------------------------------
+" quickrun-vim
+"------------------------------------------------
+
+let g:quickrun_config = {
+  \ "_" : {
+  \   "outputter/buffer/split" : ":botright 8",
+  \   "runner" : "vimproc",
+  \   "runner/vimproc/updatetime" : 40,
+      \ }
+  \ }
 
 "------------------------------------------------
 " vim-markdown
