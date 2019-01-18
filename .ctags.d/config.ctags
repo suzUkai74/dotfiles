@@ -1,0 +1,8 @@
+--append=no
+--recurse=yes
+--exclude=.git
+--exclude=.gitignore
+--exclude=log
+--exclude=tmp
+--languages=ruby
+--sort=yes

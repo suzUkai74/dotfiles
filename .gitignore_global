@@ -1,2 +1,6 @@
 .DS_Store
 *.swp
+GPATH
+GRTAGS
+GTAGS
+.Gemfile.lock.tags

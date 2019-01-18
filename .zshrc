@@ -31,9 +31,9 @@ SPROMPT="%{${fg[green]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
 PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 ;;
 *)
-PROMPT="%{${fg[cyan]}%}%/%%%{${reset_color}%} "
-PROMPT2="%{${fg[cyan]}%}%_%%%{${reset_color}%} "
-SPROMPT="%{${fg[cyan]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+PROMPT="%{${fg[magenta]}%}%/%%%{${reset_color}%} "
+PROMPT2="%{${fg[magenta]}%}%_%%%{${reset_color}%} "
+SPROMPT="%{${fg[magenta]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
 PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 ;;
@@ -149,6 +149,7 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 alias ls="ls -GF"
 alias gip="curl ifconfig.io"
 alias vim="nvim"
+alias ctags="`brew --prefix`/bin/ctags"
 
 ## コアダンプサイズを制限
 limit coredumpsize 102400
@@ -251,3 +252,4 @@ if [ -d "${PYENV_ROOT}" ]; then
   eval "$(pyenv virtualenv-init -)"
 fi
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+export PATH=$PATH:~/.nodenv/versions/10.14.2/lib/node_modules/@vue/cli/bin

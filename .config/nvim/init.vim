@@ -15,18 +15,24 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/vimshell')
   call dein#add('Shougo/deoplete.nvim', { 'on_i': 1 })
-  call dein#add('fishbullet/deoplete-ruby', { 'on_ft': 'ruby' })
-  call dein#add('Shougo/neosnippet.vim', { 'on_ft': 'snippet' })
+  " call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh', })
+  call dein#add('tbodt/deoplete-tabnine', { 'build': 'bash install.sh' })
+  " call dein#add('uplus/deoplete-solargraph', { 'on_ft': 'ruby' })
+  " call dein#add('fishbullet/deoplete-ruby', { 'on_ft': 'ruby' })
+  call dein#add('zchee/deoplete-jedi', { 'on_ft': 'python' })
   call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/neosnippet.vim', { 'on_ft': 'snippet' })
   call dein#add('Shougo/context_filetype.vim')
   call dein#add('Shougo/denite.nvim')
+  call dein#add('ozelentok/denite-gtags')
+  call dein#add('szw/vim-tags')
   call dein#add('Shougo/neomru.vim')
-  call dein#add('Shougo/vimfiler.vim' )
-  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/defx.nvim')
   call dein#add('itchyny/lightline.vim')
   call dein#add('Yggdroot/indentLine')
   call dein#add('airblade/vim-gitgutter')
   call dein#add('tpope/vim-fugitive')
+  " call dein#add('w0rp/ale')
   call dein#add('tyru/caw.vim')
   call dein#add('tpope/vim-surround')
   call dein#add('thinca/vim-ref')
@@ -37,7 +43,7 @@ if dein#load_state(s:dein_dir)
 
   call dein#add('vim-ruby/vim-ruby', { 'on_ft': 'ruby' })
   call dein#add('tpope/vim-rails', { 'on_ft': 'ruby' })
-  call dein#add('todesking/ruby_hl_lvar.vim', { 'on_ft': 'ruby' })
+  " call dein#add('todesking/ruby_hl_lvar.vim', { 'on_ft': 'ruby' })
   call dein#add('tpope/vim-markdown', { 'on_ft': 'markdown' })
   call dein#add('jelera/vim-javascript-syntax', { 'on_ft': 'javascript' })
   call dein#add('hail2u/vim-css3-syntax', { 'on_ft': 'css' })
@@ -102,6 +108,9 @@ set ambiwidth=double
 set fillchars+=vert:\|
 hi VertSplit cterm=NONE ctermfg=NONE ctermbg=NONE
 
+" Split direction
+set splitright
+
 " Complement menu height.
 set pumheight=20
 
@@ -156,6 +165,11 @@ set ttyfast
 " update swap
 set updatetime=250
 
+" wild ignore file type
+set wildignore+=*.jpg,*.jpeg,*.bmp,*.gif,*.png        " image
+set wildignore+=*.swp,*.swo,*.swn                     " vim
+set wildignore+=.Gemfile.lock.tags,GPATH,GTAGS,GRTAGS " tags
+
 " highlight
 highlight CursorLine ctermbg=13 gui=undercurl guisp=Magenta
 highlight Identifier ctermfg=215 gui=italic guifg=#ffb86c
@@ -180,6 +194,8 @@ au FileType css        setlocal sw=2 ts=2 sts=2
 au FileType javascript setlocal sw=2 ts=2 sts=2
 au FileType markdown   setlocal sw=2 ts=2 sts=2
 au FileType ruby       setlocal sw=2 ts=2 sts=2
+au FileType python     setlocal sw=4 ts=4 sts=4
+au FileType php        setlocal sw=4 ts=4 sts=4
 au FileType haml       setlocal sw=2 ts=2 sts=2
 au FileType slim       setlocal sw=2 ts=2 sts=2
 au FileType pug        setlocal sw=2 ts=2 sts=2
@@ -206,55 +222,93 @@ inoremap <C-c> <ESC>
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_complete_start_length = 1
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
+let g:deoplete#sources#jedi#enable_typeinfo = 0
 
 " Move by tab
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 " close by enter
 inoremap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
+
+"------------------------------------------------
+" LanguageClient-neovim
+"------------------------------------------------
+
+" let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_serverCommands = {
+"   \ 'ruby': ['solargraph', 'stdio']
+" \ }
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 "------------------------------------------------
 " denite.nvim
 "------------------------------------------------
 
 call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts',
-      \ ['--vimgrep', '--no-heading'])
+call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 call denite#custom#map('insert', "<C-j>", '<denite:move_to_next_line>')
 call denite#custom#map('insert', "<C-k>", '<denite:move_to_previous_line>')
+call denite#custom#map('insert', '<C-s>', '<denite:do_action:split>')
+call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>')
 
 nnoremap <silent> <C-k><C-f> :<C-u>Denite file_rec<CR>
 nnoremap <silent> <C-k><C-u> :<C-u>Denite file_mru<CR>
 nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
+nnoremap <silent> <C-k><C-o> :<C-u>Denite outline -highlight-mode-insert=Search<CR>
+
+"------------------------------------------------
+" denite-gtags
+"------------------------------------------------
+
+nnoremap <silent> <C-j><C-a> :DeniteCursorWord -buffer-name=gtags_context gtags_context<cr>
+nnoremap <silent> <C-j><C-d> :DeniteCursorWord -buffer-name=gtags_def gtags_def<cr>
+nnoremap <silent> <C-j><C-r> :DeniteCursorWord -buffer-name=gtags_ref gtags_ref<cr>
+nnoremap <silent> <C-j><C-g> :DeniteCursorWord -buffer-name=gtags_grep gtags_grep<cr>
+
+"------------------------------------------------
+" vim-tags
+"------------------------------------------------
+
+set tags+=.Gemfile.lock.tags
+nnoremap <C-]> g<C-]> 
+
+"------------------------------------------------
+" ale
+"------------------------------------------------
+
+" let g:ale_linters = {
+"     \ 'javascript': ['eslint'],
+"   \ }
+" let g:ale_sign_error = '!!'
+" let g:ale_sign_warning = '=='
 
 "------------------------------------------------
 " lightline.vim
 "------------------------------------------------
 
 let g:lightline = {
-  \ 'colorscheme': 'darcula',
-  \ 'mode_map': {'c': 'NORMAL'},
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-  \ },
-  \ 'separator': { 'left': '', 'right': '' },
-  \ 'subseparator': { 'left': '|', 'right': '|' },
-  \ 'component_function': {
-    \ 'fugitive': 'MyFugitive',
-    \ 'readonly': 'MyReadonly',
-    \ 'modified': 'MyModified',
-    \ 'filename': 'MyFilename',
-    \ 'fileformat': 'MyFileformat',
-    \ 'filetype': 'MyFiletype',
-    \ 'fileencoding': 'MyFileencoding',
-    \ 'mode': 'MyMode'
+    \ 'colorscheme': 'darcula',
+    \ 'mode_map': {'c': 'NORMAL'},
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '|', 'right': '|' },
+    \ 'component_function': {
+      \ 'fugitive': 'MyFugitive',
+      \ 'readonly': 'MyReadonly',
+      \ 'modified': 'MyModified',
+      \ 'filename': 'MyFilename',
+      \ 'fileformat': 'MyFileformat',
+      \ 'filetype': 'MyFiletype',
+      \ 'fileencoding': 'MyFileencoding',
+      \ 'mode': 'MyMode'
     \ }
   \ }
 
@@ -314,12 +368,62 @@ endif
 nnoremap <Leader>ht :GitGutterLineHighlightsToggle<CR>
 
 "------------------------------------
-" vim-filer
+" defx
 "------------------------------------
 
-let g:vimfiler_safe_mode_by_default = 0
-let g:vimfiler_as_default_explore = 1
-nnoremap <silent> <Leader>f :VimFilerExplore -split -winwidth=30 -find -toggle -no-quit<Cr>
+nnoremap <silent> <Leader>f :Defx -split=vertical -winwidth=50 -direction=topleft<CR>
+autocmd FileType defx call s:defx_my_settings()
+function! s:defx_my_settings() abort
+ " Define mappings
+  nnoremap <silent><buffer><expr> <CR>
+ \ defx#do_action('open', 'vsplit')
+  nnoremap <silent><buffer><expr> c
+ \ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> m
+ \ defx#do_action('move')
+  nnoremap <silent><buffer><expr> p
+ \ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> l
+ \ defx#do_action('open', 'vsplit')
+  nnoremap <silent><buffer><expr> o
+ \ defx#do_action('open')
+  nnoremap <silent><buffer><expr> P
+ \ defx#do_action('open', 'pedit')
+  nnoremap <silent><buffer><expr> K
+ \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> N
+ \ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> d
+ \ defx#do_action('remove')
+  nnoremap <silent><buffer><expr> r
+ \ defx#do_action('rename')
+  nnoremap <silent><buffer><expr> x
+ \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> yy
+ \ defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> .
+ \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> h
+ \ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> ~
+ \ defx#do_action('cd')
+  nnoremap <silent><buffer><expr> q
+ \ defx#do_action('quit')
+  nnoremap <silent><buffer><expr> <Space>
+ \ defx#do_action('toggle_select') . 'j'
+  nnoremap <silent><buffer><expr> *
+ \ defx#do_action('toggle_select_all')
+  nnoremap <silent><buffer><expr> j
+ \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k
+ \ line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> <C-l>
+ \ defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> <C-g>
+ \ defx#do_action('print')
+  nnoremap <silent><buffer><expr> cd
+ \ defx#do_action('change_vim_cwd')
+endfunction
 
 "------------------------------------------------
 " vim-ref
@@ -327,16 +431,11 @@ nnoremap <silent> <Leader>f :VimFilerExplore -split -winwidth=30 -find -toggle -
 
 let g:ref_refe_cmd = $HOME . '/.rbenv/shims/refe'
 
-"------------------------------------------------
-" ruby_hl_lvar
-"------------------------------------------------
-
-" let g:ruby_hl_lvar_hl_group = 'RubyLocalVariable'
-
 "-----------------------------------------------u
 " caw.vim
 "------------------------------------------------
 
+let g:caw_hatpos_skip_blank_line = 0
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 
@@ -360,7 +459,6 @@ let g:memolist_denite = 1
 
 let g:quickrun_config = {
   \ "_" : {
-  \   "outputter/buffer/split" : ":botright 8",
   \   "runner" : "vimproc",
   \   "runner/vimproc/updatetime" : 40,
       \ }
