@@ -1,0 +1,230 @@
+{
+    // window
+    "window.zoomLevel": 0,
+    "window.title": "${activeEditorMedium}${separator}${rootName}",
+    "window.restoreWindows": "all",
+
+    // editor
+    "editor.fontSize": 14,
+    "editor.fontFamily": "Ricty Diminished, Menlo, Monaco, 'Courier New', monospace",
+    "editor.minimap.enabled": false,
+    "editor.glyphMargin": true,
+    "editor.wordWrap": "on",
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": true,
+    "editor.tabCompletion": "on",
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.scrollBeyondLastLine": false,
+    "editor.renderControlCharacters": true,
+    "editor.renderLineHighlight": "all",
+    "editor.renderIndentGuides": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.cursorStyle": "line-thin",
+    "editor.cursorBlinking": "blink",
+    "editor.folding": true,
+    "editor.quickSuggestions": {
+        "comments": false,
+        "strings": true,
+        "other": true,
+    },
+
+    // workbench
+    "workbench.colorTheme": "Dracula",
+    "workbench.iconTheme": "simple-icons",
+    "workbench.startupEditor": "none",
+    "workbench.editor.showIcons": true,
+    "workbench.editor.showTabs": true,
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.openPositioning": "first",
+    "workbench.panel.defaultLocation": "right",
+    "workbench.sideBar.location": "left",
+    "workbench.statusBar.visible": true,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#6272a4",
+        "statusBar.noFolderBackground": "#6272a4",
+        "statusBar.debuggingBackground": "#6272a4"
+    },
+
+    // breadcrumbs
+    "breadcrumbs.enabled": true,
+
+    // extensions
+    "extensions.autoUpdate": false,
+
+    // terminal
+    "terminal.integrated.fontFamily": "Ricty Diminished, Menlo, Monaco, 'Courier New', monospace",
+    "terminal.integrated.fontSize": 14,
+    "terminal.external.osxExec": "iTerm.app",
+
+    // files
+    "files.autoGuessEncoding": true,
+    "files.autoSave": "off",
+    "files.eol": "\n",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.DS_Store": true,
+        "**/.github": true,
+        "**/.wercker": true,
+        "**/.placeholder": true,
+        "**/.keep": true,
+    },
+    "files.watcherExclude": {
+        "**/images/**": true,
+        "**/*.png": true,
+        "**/*.jpg": true,
+        "**/*.jpeg": true,
+        "**/*.gif": true,
+        "**/*.svg": true,
+        "**/*.ico": true,
+        "**/*.pdf": true,
+        "**/*.woff": true,
+        "**/*.woff2": true,
+        "**/*.ttf": true,
+        "**/*.eot": true,
+        "**/*.mp4": true,
+        "**/*.mov": true,
+        "**/*.map": true,
+    },
+
+    // debug
+    "debug.inlineValues": true,
+
+    // search
+    "search.followSymlinks": true,
+    "search.quickOpen.history.filterSortOrder": "recency",
+    "search.quickOpen.includeHistory": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/tmp/cache": true,
+        "**/vender/bundle": true,
+        "**/images/**": true,
+        "**/*.png": true,
+        "**/*.jpg": true,
+        "**/*.jpeg": true,
+        "**/*.gif": true,
+        "**/*.svg": true,
+        "**/*.ico": true,
+        "**/*.pdf": true,
+        "**/*.woff": true,
+        "**/*.woff2": true,
+        "**/*.ttf": true,
+        "**/*.eot": true,
+        "**/*.mp4": true,
+        "**/*.mov": true,
+        "**/*.map": true,
+    },
+
+    // filetype
+    "[ruby]": {
+        "editor.tabSize": 2
+    },
+    "[javascript]": {
+        "editor.tabSize": 2
+    },
+    "[coffeescript]": {
+        "editor.tabSize": 2
+    },
+    "[sass]": {
+        "editor.tabSize": 2
+    },
+    "[haml]": {
+        "editor.tabSize": 2
+    },
+    "[html]": {
+        "editor.tabSize": 4
+    },
+    "[python]": {
+        "editor.tabSize": 4
+    },
+    "[css]": {
+        "editor.tabSize": 4
+    },
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false
+    },
+
+    // vscodevim
+    "vim.useSystemClipboard": true,
+    "vim.hlsearch": true,
+    "vim.visualstar": true,
+    "vim.ignorecase": true,
+    "vim.incsearch": true,
+    "vim.enableNeovim": true,
+    "vim.neovimPath": "/usr/local/bin/nvim",
+    "vim.useCtrlKeys": true,
+    "vim.surround": true,
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["<C-a>"],
+            "after": ["^"]
+        },
+        {
+            "before": ["<C-e>"],
+            "after": ["$"]
+        }
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": ["<C-a>"],
+            "after": ["^"]
+        },
+        {
+            "before": ["<C-e>"],
+            "after": ["$"]
+        }
+    ],
+    "vim.statusBarColorControl": true,
+    "vim.statusBarColors.normal": "#6272a4",
+    "vim.statusBarColors.insert": "#3b9b58",
+    "vim.statusBarColors.visual": "#EBA555",
+    "vim.statusBarColors.visualline": "#EBA555",
+    "vim.statusBarColors.visualblock": "#EBA555",
+    "vim.statusBarColors.replace": "#ff5555",
+    "vim.statusBarColors.searchinprogressmode": "#6272a4",
+    "vim.statusBarColors.commandlineinprogress": "#6272a4",
+
+    // ruby
+    "ruby.intellisense": "rubyLocate",
+    "ruby.format": false,
+    "ruby.useLanguageServer": true,
+    "solargraph.definitions": true,
+    "solargraph.symbols": true,
+    "solargraph.completion": true,
+    "solargraph.formatting": false,
+
+    // python
+    "python.showStartPage": false,
+    "python.linting.enabled": false,
+    "python.languageServer": "Microsoft",
+
+    // javascript
+    "javascript.format.enable":false,
+
+    // sass
+    "sass.disableUnitCompletion": false,
+    "sass.format.enabled": true,
+    "sass.format.deleteWhitespace": true,
+    "sass.format.deleteEmptyRows": true,
+    "sass.format.setPropertySpace": true,
+
+    // gitlens
+    "gitlens.currentLine.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.statusBar.enabled": false,
+    "gitlens.views.lineHistory.enabled": false,
+    "gitlens.views.repositories.location": "scm",
+    "gitlens.views.fileHistory.location": "scm",
+    "gitlens.views.lineHistory.location": "scm",
+    "gitlens.views.compare.location": "scm",
+    "gitlens.views.search.location": "scm",
+
+    // git-graph
+    "git-graph.showStatusBarItem": false,
+
+    // projectManager
+    "projectManager.showProjectNameInStatusBar": true,
+    "projectManager.cacheProjectsBetweenSessions": true,
+}

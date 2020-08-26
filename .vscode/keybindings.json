@@ -1,0 +1,144 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+      "key": "ctrl+k d",
+      "command": "editor.action.revealDefinition",
+      "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor && vim.mode == 'Normal'"
+    },
+    {
+      "key": "ctrl+k r",
+      "command": "editor.action.goToReferences",
+      "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor && vim.mode == 'Normal'"
+    },
+    {
+      "key": "ctrl+h",
+      "command": "workbench.action.previousEditor",
+      "when": "editorFocus"
+    },
+    {
+      "key": "ctrl+l",
+      "command": "workbench.action.nextEditor",
+      "when": "editorFocus"
+    },
+    {
+      "key": "ctrl+;",
+      "command": "workbench.action.terminal.focus",
+      "when": "editorFocus && vim.mode == 'Normal'"
+    },
+    {
+      "key": "ctrl+;",
+      "command": "workbench.action.focusFirstEditorGroup",
+      "when": "terminalFocus"
+    },
+    {
+      "key": "cmd+0",
+      "command": "workbench.action.zoomReset"
+    },
+
+    // search
+    {
+      "key": "ctrl+k s",
+      "command": "search.action.openNewEditor",
+    },
+    {
+      "key": "ctrl+n",
+      "command": "search.action.focusNextSearchResult",
+      "when": "inSearchEditor && vim.mode == 'Normal'"
+    },
+    {
+      "key": "ctrl+p",             
+      "command": "search.action.focusPreviousSearchResult",
+      "when": "inSearchEditor && vim.mode == 'Normal'"
+    },
+
+    // gitlens
+    {
+      "key": "ctrl+g b",
+      "command": "gitlens.toggleFileBlame",
+      "when": "editorTextFocus && config.gitlens.keymap == 'chorded' && gitlens:activeFileStatus =~ /blameable/"
+    },
+    {
+      "key": "ctrl+g d",
+      "command": "gitlens.diffLineWithWorking",
+      "when": "editorTextFocus && config.gitlens.keymap == 'chorded' && gitlens:activeFileStatus =~ /tracked/"
+    },
+
+    // git-graph
+    {
+      "key": "ctrl+g g",
+      "command": "git-graph.view",
+      "when": "editorTextFocus && vim.mode == 'Normal'"
+    },
+
+    // projectManager
+    {
+      "key": "ctrl+k p",
+      "command": "projectManager.listProjects"
+    },
+
+    // remove
+    {
+      "key": "cmd+0",
+      "command": "-workbench.action.focusSideBar"
+    },
+    {
+      "key": "cmd+numpad0",
+      "command": "-workbench.action.zoomReset"
+    },
+    {
+      "key": "cmd+numpad_subtract",
+      "command": "-workbench.action.zoomOut"
+    },
+    {
+      "key": "cmd+[IntlRo]",
+      "command": "-workbench.action.zoomOut"
+    },
+    {
+      "key": "cmd+numpad_add",
+      "command": "-workbench.action.zoomIn"
+    },
+    {
+      "key": "shift+cmd+[Minus]",
+      "command": "-workbench.action.zoomIn"
+    },
+    {
+      "key": "f12",
+      "command": "-editor.action.revealDefinition",
+      "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+      "key": "alt+cmd+g w",
+      "command": "-gitlens.diffLineWithWorking",
+      "when": "editorTextFocus && config.gitlens.keymap == 'chorded' && gitlens:activeFileStatus =~ /tracked/"
+    },
+    {
+      "key": "alt+cmd+g b",
+      "command": "-gitlens.toggleFileBlame",
+      "when": "editorTextFocus && config.gitlens.keymap == 'chorded' && gitlens:activeFileStatus =~ /blameable/"
+    },
+    {
+      "key": "shift+f12",
+      "command": "-editor.action.goToReferences",
+      "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+      "key": "shift+cmd+[",
+      "command": "-workbench.action.previousEditor"
+    },
+    {
+      "key": "alt+cmd+left",
+      "command": "-workbench.action.previousEditor"
+    },
+    {
+      "key": "shift+cmd+]",
+      "command": "-workbench.action.nextEditor"
+    },
+    {
+      "key": "alt+cmd+right",
+      "command": "-workbench.action.nextEditor"
+    },
+    {
+      "key": "alt+cmd+p",
+      "command": "-projectManager.listProjects"
+    },
+]
