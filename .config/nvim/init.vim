@@ -14,16 +14,14 @@ if dein#load_state(s:dein_dir)
   call dein#add(s:dein_repo_url)
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/vimshell')
-  call dein#add('Shougo/deoplete.nvim', { 'on_i': 1 })
-  " call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh', })
-  call dein#add('tbodt/deoplete-tabnine', { 'build': 'bash install.sh' })
-  " call dein#add('uplus/deoplete-solargraph', { 'on_ft': 'ruby' })
-  " call dein#add('fishbullet/deoplete-ruby', { 'on_ft': 'ruby' })
-  call dein#add('zchee/deoplete-jedi', { 'on_ft': 'python' })
+  " call dein#add('Shougo/deoplete.nvim', { 'on_i': 1 })
+  " call dein#add('tbodt/deoplete-tabnine', { 'build': 'bash install.sh' })
+  call dein#add('neoclide/coc.nvim', {'branch': 'release'})
+  " call dein#add('zchee/deoplete-jedi', { 'on_ft': 'python' })
   call dein#add('Shougo/neosnippet-snippets')
   call dein#add('Shougo/neosnippet.vim', { 'on_ft': 'snippet' })
   call dein#add('Shougo/context_filetype.vim')
-  call dein#add('Shougo/denite.nvim')
+  call dein#add('Shougo/denite.nvim', {'rev': '2.0'})
   call dein#add('ozelentok/denite-gtags')
   call dein#add('szw/vim-tags')
   call dein#add('Shougo/neomru.vim')
@@ -32,7 +30,6 @@ if dein#load_state(s:dein_dir)
   call dein#add('Yggdroot/indentLine')
   call dein#add('airblade/vim-gitgutter')
   call dein#add('tpope/vim-fugitive')
-  " call dein#add('w0rp/ale')
   call dein#add('tyru/caw.vim')
   call dein#add('tpope/vim-surround')
   call dein#add('thinca/vim-ref')
@@ -43,7 +40,6 @@ if dein#load_state(s:dein_dir)
 
   call dein#add('vim-ruby/vim-ruby', { 'on_ft': 'ruby' })
   call dein#add('tpope/vim-rails', { 'on_ft': 'ruby' })
-  " call dein#add('todesking/ruby_hl_lvar.vim', { 'on_ft': 'ruby' })
   call dein#add('tpope/vim-markdown', { 'on_ft': 'markdown' })
   call dein#add('jelera/vim-javascript-syntax', { 'on_ft': 'javascript' })
   call dein#add('hail2u/vim-css3-syntax', { 'on_ft': 'css' })
@@ -215,32 +211,18 @@ nnoremap - <C-x>
 inoremap <C-c> <ESC>
 
 "------------------------------------------------
-" deoplete.nvim
+" coc.nvim
 "------------------------------------------------
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 0
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#sources#jedi#enable_typeinfo = 0
+let g:coc_global_extensions = ['coc-solargraph']
+let g:coc_node_path = $HOME . '/.nodenv/versions/10.14.2/bin/node'
 
 " Move by tab
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 " close by enter
-inoremap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
-
-"------------------------------------------------
-" LanguageClient-neovim
-"------------------------------------------------
-
-" let g:LanguageClient_autoStart = 1
-" let g:LanguageClient_serverCommands = {
-"   \ 'ruby': ['solargraph', 'stdio']
-" \ }
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+inoremap <expr><CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 "------------------------------------------------
 " denite.nvim

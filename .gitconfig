@@ -7,7 +7,7 @@
   loggr = log --graph --date-order --pretty=format:'%Cblue%h %Cgreen%ci %Cred%an %Cblue%m %Creset%s %Cred%d'
 
 [user]
-  email = watanabe@glider-associates.com
+  email = suzukai74@gmail.com
   name  = Ryosuke Watanabe
 [color]
   ui = auto
@@ -21,3 +21,7 @@
 [core]
   editor = nvim
   excludesfile = ~/.gitignore_global
+[diff]
+  tool = vscode
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE

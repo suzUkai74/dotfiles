@@ -4,3 +4,6 @@ GPATH
 GRTAGS
 GTAGS
 .Gemfile.lock.tags
+.solargraph.yml
+.wercker
+*.code-workspace

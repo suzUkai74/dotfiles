@@ -74,6 +74,28 @@ zstyle ':completion:*' list-colors \
 ;;
 esac
 
+# select
+bindkey "^[" set-mark-command
+
+# copy
+function copy-region() {
+    zle copy-region-as-kill
+    REGION_ACTIVE=0
+}
+zle -N copy-region
+bindkey "^v" copy-region
+
+# cut
+function backward-kill-word-or-region() {
+    if [ $REGION_ACTIVE -eq 0 ]; then
+        zle backward-kill-word
+    else
+        zle kill-region
+    fi
+}
+zle -N backward-kill-word-or-region
+bindkey "^d" backward-kill-word-or-region
+
 # peco
 function peco-select-history() {
   local tac
