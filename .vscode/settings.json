@@ -6,7 +6,7 @@
 
     // editor
     "editor.fontSize": 14,
-    "editor.fontFamily": "Ricty Diminished, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "MyricaM M, Menlo, Monaco, 'Courier New', monospace",
     "editor.minimap.enabled": false,
     "editor.glyphMargin": true,
     "editor.wordWrap": "on",
@@ -38,6 +38,7 @@
     "workbench.editor.tabSizing": "shrink",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.openPositioning": "first",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.panel.defaultLocation": "right",
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
@@ -70,6 +71,8 @@
         "**/.wercker": true,
         "**/.placeholder": true,
         "**/.keep": true,
+        "__pycache__": true,
+        ".pytest_cache": true,
     },
     "files.watcherExclude": {
         "**/images/**": true,

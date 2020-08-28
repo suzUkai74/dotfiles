@@ -7,3 +7,5 @@ GTAGS
 .solargraph.yml
 .wercker
 *.code-workspace
+__pycache__
+.pytest_cache
