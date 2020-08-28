@@ -4,3 +4,4 @@
 .config/configstore/
 .config/filezilla/
 .config/gtk-2.0/
+.config/coc/
