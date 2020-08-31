@@ -198,6 +198,13 @@
     "solargraph.completion": true,
     "solargraph.formatting": false,
 
+    // railsPartial
+    "railsPartial.viewFileExtensions": [
+        "html.haml",
+        "html.slim",
+        "html.erb"
+    ],
+
     // python
     "python.showStartPage": false,
     "python.linting.enabled": false,
